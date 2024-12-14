@@ -18,7 +18,7 @@
 
 ​		这篇文章是多模态大模型指令微调的经典之作，提出了一个通过纯语言GPT-4生成的多模态语言图像指令遵循数据，使用COCO图像生成三种类型的图像-语言指令跟随数据，具体为58000个对话样本，23000个详细描述，77000个复杂推理样本。
 
-​		在[**llava-Instruct-150k**](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K)指令跟随数据的基础上，作者采用“视觉编码器-线性层-大语言模型（LLM）”的架构，训练了一个多模态大模型llava，这个架构也被沿用至今。在llava中，视觉编码器选择CLIP的[**VIT-L/14**](https://huggingface.co/openai/clip-vit-large-patch14)，大语言模型选择[**Vicuna**](https://huggingface.co/lmsys/vicuna-7b-v1.5)，线性层的作用是把图像编码投影为LLM可以理解的token，当然，投影层也可以选择OpenFlamingo的门控交叉注意力或者BLIP-2的Q-former，不过这些模态对齐方法更复杂，作者在这里考虑到希望投影层是轻量级，能够快速迭代数据。在**[To Preserve or To Compress: An In-Depth Study of Connector Selection in Multimodal Large Language Models](https://arxiv.org/pdf/2410.06765)**一文中，作者研究了不同投影层类型的影响，Q-former并没有展现更好的性能，简单的双层MLP和平均池化就可以展现不错的性能，另外，图像分辨率对MLLM的性能有较大的影响，这说明图像编码器的选择是非常重要的。
+​		在[**llava-Instruct-150k**](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K)指令跟随数据的基础上，作者采用“视觉编码器-线性层-大语言模型（LLM）”的架构，训练了一个多模态大模型llava，这个架构也被沿用至今。在llava中，视觉编码器选择CLIP的[**VIT-L/14**](https://huggingface.co/openai/clip-vit-large-patch14)，大语言模型选择[**Vicuna**](https://huggingface.co/lmsys/vicuna-7b-v1.5)，线性层的作用是把图像编码投影为LLM可以理解的token，当然，投影层也可以选择OpenFlamingo的门控交叉注意力或者BLIP-2的Q-former，不过这些模态对齐方法更复杂，作者在这里考虑到希望投影层是轻量级，能够快速迭代数据。在[**To Preserve or To Compress: An In-Depth Study of Connector Selection in Multimodal Large Language Models**](https://arxiv.org/pdf/2410.06765)一文中，作者研究了不同投影层类型的影响，Q-former并没有展现更好的性能，简单的双层MLP和平均池化就可以展现不错的性能，另外，图像分辨率对MLLM的性能有较大的影响，这说明图像编码器的选择是非常重要的。
 
 ​		llava采用的是两阶段训练，第一阶段为特征对齐训练，冻结图像编码与LLM，训练投影层以对齐图像和文本特征，第二阶段为指令微调，只冻结图像编码器，微调投影层和LLM以增强模型的任务泛化能力。llava在对话、详细描述、复杂推理任务都远远超过[**OpenFlamingo**](https://arxiv.org/pdf/2308.01390)和[**BLIP-2**](https://arxiv.org/pdf/2301.12597)，达到了SOTA，在ScienceQA任务上则接近SOTA。
 
@@ -34,7 +34,7 @@
 
 ​		图（a）中，下面的分支表示基础图像，即将高分辨率图像resize到适应图像编码器的固定分辨率，上面的分支表示将高分辨率图像进行裁剪，若裁剪后的区域分辨率较高，则会考虑使用双线性插值减少token数目。下图是AnyRes策略在单图像、多图像、视频场景下的token计算示例图。
 
-![AnyRes Token](figs/day1/AnyRes Token.jpg)
+![AnyRes Token](figs/day1/AnyRes-Token.jpg)
 
 ​		对于单图像，AnyRes考虑了基础图像和裁剪区域的大量token，对于多图像，AnyRes只考虑基础图像token，对于视频，每个帧都会调整为基础图像分辨率，使用双线性插值减少token数目，允许在减少每帧token的同时考虑更多的帧。在这样的策略下，llava-onevision较好地平衡了性能和计算成本。
 
@@ -46,11 +46,11 @@
 
 #### <a id="qwen2-vl"></a>[**Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution**](https://arxiv.org/pdf/2409.12191)**![Star](https://img.shields.io/github/stars/QwenLM/Qwen2-VL.svg?style=social&label=Star)**
 
-​		Qwen2-VL是对Qwen-VL等一系列MLLM的改进，过去大多数MLLMs都是处理固定分辨率的图像，Qwen2-VL引入一个**“Native Resolution Input”**机制，可以处理任何分辨率的图像。**“Native Resolution Input”**动态地将图像转化为可变数据的视觉token，从下面的Qwen2-VL框架图来看，**“Native Resolution Input”**主要是将图像和视频压缩为一定数据的token，然后嵌入到LLM中，对于图像压缩4倍，对于视频压缩8倍，不超过LLM所能接受的token数量。由于进行了压缩，VIT中的绝对位置编码不能用了，作者改为二维旋转位置编码（2D-RoPE）来捕获图像的二维位置信息。另外，在每个图像或者视频前后加入`<|vision_start|>`和`<|vision_end|>`特殊标记，这就构成了一个完整的视觉编码。
+​		Qwen2-VL是对Qwen-VL等一系列MLLM的改进，过去大多数MLLMs都是处理固定分辨率的图像，Qwen2-VL引入一个**Native Resolution Input**机制，可以处理任何分辨率的图像。**“Native Resolution Input”**动态地将图像转化为可变数据的视觉token，从下面的Qwen2-VL框架图来看，**Native Resolution Input**主要是将图像和视频压缩为一定数据的token，然后嵌入到LLM中，对于图像压缩4倍，对于视频压缩8倍，不超过LLM所能接受的token数量。由于进行了压缩，VIT中的绝对位置编码不能用了，作者改为二维旋转位置编码（2D-RoPE）来捕获图像的二维位置信息。另外，在每个图像或者视频前后加入`<|vision_start|>`和`<|vision_end|>`特殊标记，这就构成了一个完整的视觉编码。
 
-![Qwen2-VL](figs/day1/Qwen2-VL framework.jpg)
+![Qwen2-VL](figs/day1/Qwen2-VL-framework.jpg)
 
-​		原始的RoPE只能编码一维位置信息，作者对其进行了拓展，提出了M-RoPE，将原始RoPE分解为三个维度来实现：time、heigh、width，即共同由`$$(ID_{time}, ID_{heigh}, ID_{width})$$`决定位置信息。对于文本，这些维度都使用相同的位置ID，对于图像，时间ID保持不变，对于视频，每个维度ID具体分配，如下图所示。
+​		原始的RoPE只能编码一维位置信息，作者对其进行了拓展，提出了M-RoPE，将原始RoPE分解为三个维度来实现：time、heigh、width，即共同由$$(ID_{\text{time}}, ID_{\text{height}}, ID_{\text{width}})$$决定位置信息。对于文本，这些维度都使用相同的位置ID，对于图像，时间ID保持不变，对于视频，每个维度ID具体分配，如下图所示。
 
 ![M-RoPE](figs/day1/M-RoPE.jpg)
 
