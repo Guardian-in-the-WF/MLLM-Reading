@@ -30,7 +30,7 @@
 
 ​		llava-onevision是一个开放式的多模态大模型，能够处理单图像、多图像和视频场景下的视觉任务。llava-onevision沿用llava的设计，视觉编码器采用SigLIP，LLM采用Qwen-2，投影层选择两层MLP。另外，作者还提出了一个新的AnyRes策略，灵活处理图像和视频的token，如下图。
 
-![AnyRes](figs/day1/AnyRes.jpg)
+<p align="center">  <img src="figs/day1/AnyRes.jpg" alt="AnyRes"> </p>
 
 ​		图（a）中，下面的分支表示基础图像，即将高分辨率图像resize到适应图像编码器的固定分辨率，上面的分支表示将高分辨率图像进行裁剪，若裁剪后的区域分辨率较高，则会考虑使用双线性插值减少token数目。下图是AnyRes策略在单图像、多图像、视频场景下的token计算示例图。
 
@@ -48,11 +48,11 @@
 
 ​		Qwen2-VL是对Qwen-VL等一系列MLLM的改进，过去大多数MLLMs都是处理固定分辨率的图像，Qwen2-VL引入一个**Native Resolution Input**机制，可以处理任何分辨率的图像。**“Native Resolution Input”**动态地将图像转化为可变数据的视觉token，从下面的Qwen2-VL框架图来看，**Native Resolution Input**主要是将图像和视频压缩为一定数据的token，然后嵌入到LLM中，对于图像压缩4倍，对于视频压缩8倍，不超过LLM所能接受的token数量。由于进行了压缩，VIT中的绝对位置编码不能用了，作者改为二维旋转位置编码（2D-RoPE）来捕获图像的二维位置信息。另外，在每个图像或者视频前后加入`<|vision_start|>`和`<|vision_end|>`特殊标记，这就构成了一个完整的视觉编码。
 
-![Qwen2-VL](figs/day1/Qwen2-VL-framework.jpg)
+<p align="center">   <img src="figs/day1/Qwen2-VL-framework.jpg" alt="Qwen2-VL-framework"> </p>
 
 ​		原始的RoPE只能编码一维位置信息，作者对其进行了拓展，提出了M-RoPE，将原始RoPE分解为三个维度来实现：time、heigh、width，即共同由![公式](https://latex.codecogs.com/svg.latex?ID_{\text{time}},%20ID_{\text{height}},%20ID_{\text{width}})决定位置信息。对于文本，这些维度都使用相同的位置ID，对于图像，时间ID保持不变，对于视频，每个维度ID具体分配，如下图所示。
 
-![M-RoPE](figs/day1/M-RoPE.jpg)
+<p align="center">   <img src="figs/day1/M-RoPE.jpg" alt="M-RoPE"> </p>
 
 ​		Qwen2-VL在DocVQA、InfoVQA、RealWorldQA、MTVQA等多个视觉基准达到了SOTA。Qwen2-VL-72B在各种agent基准测试中与GPT-4o的性能相当。Qwen2-VL能够理解超过20分钟长度的视频，并在多语言、OCR、数据推理都取得了领先的水平。
 
