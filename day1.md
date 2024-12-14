@@ -5,8 +5,8 @@
 ## Table of Contents
 - [**Paper Reading**](#Paper-Reading)
   - [**Visual Instruction Tuning**](#Visual-Instruction-Tuning)**[star: 21k]**
-  - [**LLaVA-OneVision: Easy Visual Task Transfer**](#LLaVA-OneVision-Easy-Visual-Task-Transfer)**[star: 3.1k]**
-  - [**Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution**](#Qwen2-VL-Enhancing-Vision-Language-Models-Perception-of-the-World-at-Any-Resolution)**[star: 3.6k]**
+  - [**LLaVA-OneVision: Easy Visual Task Transfer**](#LLaVA-OneVision-Easy-Visual-Task-Transfer)
+  - [**Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution**](#qwen2-vl)**[star: 3.6k]**
 - [**Coding**](#Coding)
   - [**llava源码分析之-prepare_inputs_labels_for_multimodal**](#llava源码分析之-prepare-inputs-labels-for-multimodal)
 
@@ -44,7 +44,7 @@
 
 
 
-#### <a id="Qwen2-VL-Enhancing-Vision-Language-Models-Perception-of-the-World-at-Any-Resolution"></a>[**Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution**](https://arxiv.org/pdf/2409.12191)**[star: 3.6k]**
+#### <a id="qwen2-vl"></a>[**Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution**](https://arxiv.org/pdf/2409.12191)**[star: 3.6k]**
 
 ​		Qwen2-VL是对Qwen-VL等一系列MLLM的改进，过去大多数MLLMs都是处理固定分辨率的图像，Qwen2-VL引入一个**“Native Resolution Input”**机制，可以处理任何分辨率的图像。**“Native Resolution Input”**动态地将图像转化为可变数据的视觉token，从下面的Qwen2-VL框架图来看，**“Native Resolution Input”**主要是将图像和视频压缩为一定数据的token，然后嵌入到LLM中，对于图像压缩4倍，对于视频压缩8倍，不超过LLM所能接受的token数量。由于进行了压缩，VIT中的绝对位置编码不能用了，作者改为二维旋转位置编码（2D-RoPE）来捕获图像的二维位置信息。另外，在每个图像或者视频前后加入`<|vision_start|>`和`<|vision_end|>`特殊标记，这就构成了一个完整的视觉编码。
 
