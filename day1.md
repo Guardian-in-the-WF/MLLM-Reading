@@ -5,8 +5,8 @@
 ## Table of Contents
 - [**Paper Reading**](#Paper-Reading)
   - [**Visual Instruction Tuning**](#Visual-Instruction-Tuning)**[star: 21k]**
-  - [**LLaVA-OneVision: Easy Visual Task Transfer**](#LLaVA-OneVision:-Easy-Visual-Task-Transfer)**[star: 3.1k]**
-  - [**Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution**](#Qwen2-VL:-Enhancing-Vision-Language-Model's-Perception-of-the-World-at-Any-Resolution)**[star: 3.6k]**
+  - [**LLaVA-OneVision: Easy Visual Task Transfer**](#LLaVA-OneVision-Easy-Visual-Task-Transfer)**[star: 3.1k]**
+  - [**Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution**](#Qwen2-VL-Enhancing-Vision-Language-Models-Perception-of-the-World-at-Any-Resolution)**[star: 3.6k]**
 - [**Coding**](#Coding)
   - [**llava源码分析之-prepare_inputs_labels_for_multimodal**](#llava源码分析之-prepare-inputs-labels-for-multimodal)
 
@@ -14,7 +14,7 @@
 
 ### Paper Reading
 
-#### <a id="Visual Instruction Tuning"></a>[**Visual Instruction Tuning**](https://arxiv.org/pdf/2304.08485)**[star: 21k]**
+#### <a id="Visual-Instruction-Tuning"></a>1.[**Visual Instruction Tuning**](https://arxiv.org/pdf/2304.08485)**[star: 21k]**
 
 ​		这篇文章是多模态大模型指令微调的经典之作，提出了一个通过纯语言GPT-4生成的多模态语言图像指令遵循数据，使用COCO图像生成三种类型的图像-语言指令跟随数据，具体为58000个对话样本，23000个详细描述，77000个复杂推理样本。
 
@@ -26,7 +26,7 @@
 
 
 
-##### 2.[**LLaVA-OneVision: Easy Visual Task Transfer**](https://arxiv.org/pdf/2408.03326)**[star: 3.1k]**
+#### <a id="LLaVA-OneVision-Easy-Visual-Task-Transfer"></a>2.[**LLaVA-OneVision: Easy Visual Task Transfer**](https://arxiv.org/pdf/2408.03326)**[star: 3.1k]**
 
 ​		llava-onevision是一个开放式的多模态大模型，能够处理单图像、多图像和视频场景下的视觉任务。llava-onevision沿用llava的设计，视觉编码器采用SigLIP，LLM采用Qwen-2，投影层选择两层MLP。另外，作者还提出了一个新的AnyRes策略，灵活处理图像和视频的token，如下图。
 
@@ -44,7 +44,7 @@
 
 
 
-##### 3.[**Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution**](https://arxiv.org/pdf/2409.12191)**[star: 3.6k]**
+#### 3.<a id="Qwen2-VL-Enhancing-Vision-Language-Models-Perception-of-the-World-at-Any-Resolution"></a>[**Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution**](https://arxiv.org/pdf/2409.12191)**[star: 3.6k]**
 
 ​		Qwen2-VL是对Qwen-VL等一系列MLLM的改进，过去大多数MLLMs都是处理固定分辨率的图像，Qwen2-VL引入一个**“Native Resolution Input”**机制，可以处理任何分辨率的图像。**“Native Resolution Input”**动态地将图像转化为可变数据的视觉token，从下面的Qwen2-VL框架图来看，**“Native Resolution Input”**主要是将图像和视频压缩为一定数据的token，然后嵌入到LLM中，对于图像压缩4倍，对于视频压缩8倍，不超过LLM所能接受的token数量。由于进行了压缩，VIT中的绝对位置编码不能用了，作者改为二维旋转位置编码（2D-RoPE）来捕获图像的二维位置信息。另外，在每个图像或者视频前后加入`<|vision_start|>`和`<|vision_end|>`特殊标记，这就构成了一个完整的视觉编码。
 
@@ -62,7 +62,7 @@
 
 ### Coding
 
-##### 1.llava源码分析之-[**prepare_inputs_labels_for_multimodal**](https://github.com/haotian-liu/LLaVA/blob/c121f0432da27facab705978f83c4ada465e46fd/llava/model/llava_arch.py#L145)
+##### 1.<a id="llava源码分析之-prepare-inputs-labels-for-multimodal"></a>[**llava源码分析之-prepare_inputs_labels_for_multimodal**](https://github.com/haotian-liu/LLaVA/blob/c121f0432da27facab705978f83c4ada465e46fd/llava/model/llava_arch.py#L145)
 
 ​		`prepare_inputs_labels_for_multimodal`函数llava处理模态对齐的核心，下面主要关注图像和文本编码是如何拼接的。
 
