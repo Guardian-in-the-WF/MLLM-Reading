@@ -34,7 +34,7 @@
 
 ​		图（a）中，下面的分支表示基础图像，即将高分辨率图像resize到适应图像编码器的固定分辨率，上面的分支表示将高分辨率图像进行裁剪，若裁剪后的区域分辨率较高，则会考虑使用双线性插值减少token数目。下图是AnyRes策略在单图像、多图像、视频场景下的token计算示例图。
 
-![AnyRes Token](figs/day1/AnyRes-Token.jpg)
+<p align="center">   <img src="figs/day1/AnyRes-Token.jpg" alt="AnyRes Token"> </p>
 
 ​		对于单图像，AnyRes考虑了基础图像和裁剪区域的大量token，对于多图像，AnyRes只考虑基础图像token，对于视频，每个帧都会调整为基础图像分辨率，使用双线性插值减少token数目，允许在减少每帧token的同时考虑更多的帧。在这样的策略下，llava-onevision较好地平衡了性能和计算成本。
 
