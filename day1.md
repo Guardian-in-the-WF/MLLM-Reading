@@ -14,7 +14,7 @@
 
 ### Paper Reading
 
-##### 1.[**Visual Instruction Tuning**](https://arxiv.org/pdf/2304.08485)**[star: 21k]**
+#### <a id="Visual Instruction Tuning"></a>[**Visual Instruction Tuning**](https://arxiv.org/pdf/2304.08485)**[star: 21k]**
 
 ​		这篇文章是多模态大模型指令微调的经典之作，提出了一个通过纯语言GPT-4生成的多模态语言图像指令遵循数据，使用COCO图像生成三种类型的图像-语言指令跟随数据，具体为58000个对话样本，23000个详细描述，77000个复杂推理样本。
 
