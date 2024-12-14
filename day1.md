@@ -50,7 +50,7 @@
 
 ![Qwen2-VL](figs/day1/Qwen2-VL-framework.jpg)
 
-​		原始的RoPE只能编码一维位置信息，作者对其进行了拓展，提出了M-RoPE，将原始RoPE分解为三个维度来实现：time、heigh、width，即共同由$$(ID_{\text{time}}, ID_{\text{height}}, ID_{\text{width}})$$决定位置信息。对于文本，这些维度都使用相同的位置ID，对于图像，时间ID保持不变，对于视频，每个维度ID具体分配，如下图所示。
+​		原始的RoPE只能编码一维位置信息，作者对其进行了拓展，提出了M-RoPE，将原始RoPE分解为三个维度来实现：time、heigh、width，即共同由![公式](https://latex.codecogs.com/svg.latex?ID_{\text{time}},%20ID_{\text{height}},%20ID_{\text{width}})决定位置信息。对于文本，这些维度都使用相同的位置ID，对于图像，时间ID保持不变，对于视频，每个维度ID具体分配，如下图所示。
 
 ![M-RoPE](figs/day1/M-RoPE.jpg)
 
