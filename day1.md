@@ -1,13 +1,13 @@
 # Multimodal Instruction Tuning
 
-今天阅读的论文模块是**[Multimodal Instruction Tuning](https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models?tab=readme-ov-file#multimodal-instruction-tuning)**，作为对齐训练的下一步，指令微调可以帮助模型理解用户的具体需求，更准确地执行任务，并能够提高在新任务上的零样本推理能力，是大模型训练中至关重要的一步。下面来剖析3篇文章，加深对多模态大模型（MLLM）理解。
+今天阅读的论文模块是[**Multimodal Instruction Tuning**](https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models?tab=readme-ov-file#multimodal-instruction-tuning)，作为对齐训练的下一步，指令微调可以帮助模型理解用户的具体需求，更准确地执行任务，并能够提高在新任务上的零样本推理能力，是大模型训练中至关重要的一步。下面来剖析3篇文章，加深对多模态大模型（MLLM）理解。
 
 ## Table of Contents
-- **[Paper Reading](#Paper Reading)**
+- [**Paper Reading**](#Paper Reading)
   - [**Visual Instruction Tuning**](https://arxiv.org/pdf/2304.08485)**[star: 21k]**
   - [**LLaVA-OneVision: Easy Visual Task Transfer**](https://arxiv.org/pdf/2408.03326)**[star: 3.1k]**
   - [**Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution**](https://arxiv.org/pdf/2409.12191)**[star: 3.6k]**
-- **[Coding](#Coding)**
+- [**Coding**](#Coding)
   - llava源码分析之-[**prepare_inputs_labels_for_multimodal**](https://github.com/haotian-liu/LLaVA/blob/c121f0432da27facab705978f83c4ada465e46fd/llava/model/llava_arch.py#L145)
 
 
